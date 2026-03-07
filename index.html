@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <!-- daisy Ui -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2:wght@400..800&family=Comfortaa:wght@300..700&family=Geist:wght@100..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Deca:wght@100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Geist", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen flex items-center justify-center bg-gray-100">
+      <div class="max-w-md w-full bg-white shadow-md">
+        <div class="flex flex-col items-center py-7">
+          <img src="./assets/github-logo.png" alt="" />
+          <p class="text-2xl font-bold pt-7">GitHub Issues Tracker</p>
+          <p class="text-[#64748b]">Sign in to manage your issues</p>
+        </div>
+
+        <div class="">
+          <div class="card-body">
+            <fieldset class="fieldset">
+              <label class="label text-black font-semibold text-sm"
+                >Username</label
+              >
+              <input
+              id="user-id"
+                type="text"
+                class="input w-full"
+                placeholder="Enter Username"
+                autocomplete="off"
+              />
+              <p class="text-[#4a00ff] pb-3">Default: admin</p>
+              <label class="label text-black font-semibold text-sm"
+                >Password</label
+              >
+              <input
+              id="user-pass"
+                type="password"
+                maxlength="8"
+                class="input w-full"
+                placeholder="Enter Password"
+                autocomplete="off"
+              />
+              <p class="text-[#4a00ff]">Default: admin123</p>
+              <button id="signinBtn" class="btn btn-primary mt-4">Sign In</button>
+            </fieldset>
+          </div>
+        </div>
+        <div class="flex items-center mb-6 mx-7">
+          <div class="flex-grow border-t border-[#ececee]"></div>
+          <span class="mx-1 text-black">OR</span>
+          <div class="flex-grow border-t border-[#ececee]"></div>
+        </div>
+        <p class="text-center text-gray-500">Demo Credentials:</p>
+        <div class="bg-gray-100 flex flex-col items-center text-center py-5 m-7">
+          <p class="font-semibold">Username: <span class="font-normal">admin</span></p>
+          <p class="font-semibold">Passowrd: <span class="font-normal">admin123</span></p>
+        </div>
+      </div>
+    </div>
+
+  <script src="./index.js"></script>  
+  </body>
+</html>
