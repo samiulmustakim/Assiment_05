@@ -131,7 +131,7 @@ function displayAllIssueContaier(data) {
     cart.innerHTML = `
         <div onclick = "loadDetailsCart(${card.id})" class="flex flex-col text-left p-7 col-span-1 bg-white shadow-md rounded-md space-y-3 h-80 ${card.status === "open" ? "border-t-4 border-green-600" : "border-t-4 border-purple-400"}">
               <div class="flex justify-between">
-                <img src="${card.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}" alt="" />
+                <img src="${card.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed-Status.png"}" alt="" />
                 <div>
                  ${createPriority(card.priority)}
                 </div>
@@ -183,12 +183,20 @@ document.getElementById("closed-btn").addEventListener("click", () => {
 
 // Search Input Search Input
 document.getElementById("btn-search").addEventListener("click", () => {
+  manageSpinner(true);
   const buttons = document.querySelectorAll(".filter-btn");
   buttons.forEach((btn) => {
     btn.classList.remove("btn-primary");
   });
   const input = document.getElementById("input-search");
   const searchValue = input.value.trim().toLowerCase();
+
+  if (searchValue === "") {
+    displayAllIssueContaier(allIssue);
+    updateCount(allIssue);
+    manageSpinner(false);
+    return;
+  }
 
   fetch(
     `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
@@ -201,5 +209,6 @@ document.getElementById("btn-search").addEventListener("click", () => {
       );
       displayAllIssueContaier(result);
       updateCount(result);
+      manageSpinner(false);
     });
 });
