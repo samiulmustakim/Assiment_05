@@ -1,12 +1,13 @@
-
-// loadDetailsCart loadDetailsCart 
+// loadDetailsCart loadDetailsCart
 async function loadDetailsCart(id) {
-  const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
-  const details = await res.json()
-  displayDetailsCart(details.data)
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
+  );
+  const details = await res.json();
+  displayDetailsCart(details.data);
 }
 function displayDetailsCart(data) {
-  const detailsContainer = document.getElementById('details-container')
+  const detailsContainer = document.getElementById("details-container");
   detailsContainer.innerHTML = `
    <div  class="flex flex-col gap-5">
           <h1 class="text-2xl font-bold">${data.title}</h1>
@@ -39,42 +40,42 @@ function displayDetailsCart(data) {
             <button class="btn btn-primary">Close</button>
           </form>
         </div>
-  `
-  document.getElementById('my_modal_5').showModal()
+  `;
+  document.getElementById("my_modal_5").showModal();
 }
-// Count Count 
+// Count Count
 function updateCount(data) {
-  const count = document.getElementById('issue-count')
-  count.innerText = `${data.length} Issue`
+  const count = document.getElementById("issue-count");
+  count.innerText = `${data.length} Issue`;
 }
 
-// manage spin 
+// manage spin
 const manageSpinner = (status) => {
   if (status == true) {
-    document.getElementById('spinner').classList.remove("hidden")
-    document.getElementById('allIssueCardContainer').classList.add("hidden")
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("allIssueCardContainer").classList.add("hidden");
   } else if (status == false) {
-    document.getElementById('spinner').classList.add("hidden")
-    document.getElementById('allIssueCardContainer').classList.remove("hidden")
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("allIssueCardContainer").classList.remove("hidden");
   }
-}
+};
 
-// Button Click color show 
+// Button Click color show
 const buttons = document.querySelectorAll(".filter-btn");
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    buttons.forEach(element => {
-      element.classList.remove("btn-primary")
+buttons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    buttons.forEach((element) => {
+      element.classList.remove("btn-primary");
     });
-    btn.classList.add('btn-primary')
-  })
+    btn.classList.add("btn-primary");
+  });
 });
 
 // top badge high medium low priyority
 const priyorityColors = {
   high: "bg-red-100 text-red-500",
   medium: "bg-yellow-100 text-yellow-600",
-  low: "bg-gray-200 text-gray-500"
+  low: "bg-gray-200 text-gray-500",
 };
 const createPriority = (priority) => {
   const color = priyorityColors[priority] || "bg-gray-200 text-gray-500";
@@ -83,7 +84,7 @@ const createPriority = (priority) => {
   </div>`;
 };
 
-// Bug and Help wanted Badge 
+// Bug and Help wanted Badge
 const labelColors = {
   bug: "badge-error",
   "help wanted": "badge-warning",
@@ -101,29 +102,28 @@ const createlement = (arr) => {
   return htmlElement.join("");
 };
 
-// FOrmate Date 
-function formatDate(dateString){
+// FOrmate Date
+function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US");
 }
 
-
-// all Issue push in container all Issue push in container all Issue push in container 
+// all Issue push in container all Issue push in container all Issue push in container
 async function loadAllIssueContaier() {
-  manageSpinner(true)
+  manageSpinner(true);
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const data = await res.json();
-  allIssue = data.data
-  updateCount(allIssue)
+  allIssue = data.data;
+  updateCount(allIssue);
   displayAllIssueContaier(data.data);
 }
 loadAllIssueContaier();
 // display issue all
 function displayAllIssueContaier(data) {
   const allIssueCardContainer = document.getElementById(
-    "allIssueCardContainer"
+    "allIssueCardContainer",
   );
   allIssueCardContainer.innerHTML = "";
   data.forEach((card) => {
@@ -152,51 +152,54 @@ function displayAllIssueContaier(data) {
         `;
     allIssueCardContainer.append(cart);
   });
-  manageSpinner(false)
+  manageSpinner(false);
 }
 
 // swictched button form all to open ,open to close again close to open
-let allIssue = []
+let allIssue = [];
 
-document.getElementById('all-btn').addEventListener('click',()=> {
-  displayAllIssueContaier(allIssue)
-  updateCount(allIssue)
-})
-document.getElementById('open-btn').addEventListener('click', () => {
-  const openIssue = allIssue.filter(issue => issue.status === "open")
-  manageSpinner(true)
+document.getElementById("all-btn").addEventListener("click", () => {
+  displayAllIssueContaier(allIssue);
+  updateCount(allIssue);
+});
+document.getElementById("open-btn").addEventListener("click", () => {
+  const openIssue = allIssue.filter((issue) => issue.status === "open");
+  manageSpinner(true);
   setTimeout(() => {
-    displayAllIssueContaier(openIssue)
-    updateCount(openIssue)
-    manageSpinner(false)
+    displayAllIssueContaier(openIssue);
+    updateCount(openIssue);
+    manageSpinner(false);
   }, 100);
-})
-document.getElementById('closed-btn').addEventListener('click', () => {
-  const closeIssue = allIssue.filter(issue => issue.status === "closed")
-  manageSpinner(true)
+});
+document.getElementById("closed-btn").addEventListener("click", () => {
+  const closeIssue = allIssue.filter((issue) => issue.status === "closed");
+  manageSpinner(true);
   setTimeout(() => {
-    displayAllIssueContaier(closeIssue)
-    updateCount(closeIssue)
-    manageSpinner(false)
+    displayAllIssueContaier(closeIssue);
+    updateCount(closeIssue);
+    manageSpinner(false);
   }, 100);
-})
+});
 
-// Search Input Search Input 
-document.getElementById('btn-search').addEventListener('click', () => {
-
-  const buttons = document.querySelectorAll('.filter-btn')
-  buttons.forEach(btn => {
-    btn.classList.remove("btn-primary")
+// Search Input Search Input
+document.getElementById("btn-search").addEventListener("click", () => {
+  const buttons = document.querySelectorAll(".filter-btn");
+  buttons.forEach((btn) => {
+    btn.classList.remove("btn-primary");
   });
-  const input = document.getElementById('input-search')
-  const searchValue = input.value.trim().toLowerCase()
-  
-  fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+  const input = document.getElementById("input-search");
+  const searchValue = input.value.trim().toLowerCase();
+
+  fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
+  )
     .then((res) => res.json())
     .then((data) => {
-      const allData = data.data
-      const result = allData.filter(word => word.title.toLowerCase().includes(searchValue))
-      displayAllIssueContaier(result)
-      updateCount(result)
-    })
-})
+      const allData = data.data;
+      const result = allData.filter((word) =>
+        word.title.toLowerCase().includes(searchValue),
+      );
+      displayAllIssueContaier(result);
+      updateCount(result);
+    });
+});
