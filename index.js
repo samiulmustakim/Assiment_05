@@ -8,7 +8,7 @@ document.getElementById('signinBtn').addEventListener('click', () => {
     
 
     if (userValue === "admin" && pin === "admin123") {
-        window.location.assign("/home.html")
+        window.location.assign("./home.html")
     } else {
         alert("Login Failed")
         userId.value = ""
