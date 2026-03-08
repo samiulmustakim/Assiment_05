@@ -1,15 +1,61 @@
-// loadDetailsCart loadDetailsCart 
-async function loadDetailsCart() {
-  const res = await fetch ('')
+// Count Count 
+function updateCount(data) {
+  const count = document.getElementById('issue-count')
+  count.innerText = `${data.length} Issue`
 }
+
+// loadDetailsCart loadDetailsCart 
+async function loadDetailsCart(id) {
+  const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
+  const details = await res.json()
+  displayDetailsCart(details.data)
+}
+function displayDetailsCart(data) {
+  const detailsContainer = document.getElementById('details-container')
+  detailsContainer.innerHTML = `
+   <div  class="flex flex-col gap-5">
+          <h1 class="text-2xl font-bold">${data.title}</h1>
+          <div class="flex gap-2 text-sm items-center">
+            <div class="badge badge-success rounded-full">${data.status}</div>
+            <p class="rounded-full h-1 w-1 bg-[#888]"></p>
+            <p>Opened by ${data.assignee}</p>
+            <p class="rounded-full h-1 w-1 bg-[#888]"></p>
+            <p>${formatDate(data.createdAt)}</p>
+          </div>
+          <div class="flex">
+            <div class="flex gap-4">${createlement(data.labels)}</div>
+          </div>
+          <p>${data.description}</p>
+          <div class="flex justify-between bg-gray-100 p-5 rounded-md">
+          <div class="w-100">
+            <p>Assignee:</p>
+            <p class="font-bold">${data.author}</p>
+          </div>
+          <div class="w-100">
+            <p>Priority:</p>
+            <div>${createPriority(data.priority)}</div>
+          </div>
+        </div>
+        </div>
+        
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-primary">Close</button>
+          </form>
+        </div>
+  `
+  document.getElementById('my_modal_5').showModal()
+}
+
 // Button Click color show 
 const buttons = document.querySelectorAll(".filter-btn");
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
     buttons.forEach(element => {
       element.classList.remove("btn-primary")
-      btn.classList.add('btn-primary')
     });
+    btn.classList.add('btn-primary')
   })
 });
 
@@ -44,6 +90,12 @@ const createlement = (arr) => {
   return htmlElement.join("");
 };
 
+// FOrmate Date 
+function formatDate(dateString){
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US");
+}
+
 
 // all Issue push in container all Issue push in container all Issue push in container 
 async function loadAllIssueContaier() {
@@ -51,23 +103,22 @@ async function loadAllIssueContaier() {
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const data = await res.json();
+  allIssue = data.data
   displayAllIssueContaier(data.data);
 }
 loadAllIssueContaier();
 // display issue all
 function displayAllIssueContaier(data) {
   const allIssueCardContainer = document.getElementById(
-    "allIssueCardContainer",
+    "allIssueCardContainer"
   );
   allIssueCardContainer.innerHTML = "";
   data.forEach((card) => {
     let cart = document.createElement("div");
-    const date = new Date(card.createdAt);
-    const formattedDate = date.toLocaleDateString("en-US");
     cart.innerHTML = `
-        <div class="onclick = "loadDetailsCart()" flex flex-col text-left p-7 col-span-1 bg-white shadow-md rounded-md space-y-3 h-80 ${card.priority === "low" ? "border-t-4 border-purple-400" : "border-t-4 border-green-600"}">
+        <div onclick = "loadDetailsCart(${card.id})" class="flex flex-col text-left p-7 col-span-1 bg-white shadow-md rounded-md space-y-3 h-80 ${card.status === "open" ? "border-t-4 border-green-600" : "border-t-4 border-purple-400"}">
               <div class="flex justify-between">
-                <img src="/assets/Open-Status.png" alt="" />
+                <img src="${card.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}" alt="" />
                 <div>
                  ${createPriority(card.priority)}
                 </div>
@@ -83,9 +134,27 @@ function displayAllIssueContaier(data) {
               </div>
               <div class="border-gray-300 border-t -mx-7"></div>
               <p class="text-sm">#1by ${card.author}</p>
-              <p class="text-sm">${formattedDate}</p>
+              <p class="text-sm">${formatDate(card.createdAt)}</p>
             </div> 
         `;
     allIssueCardContainer.append(cart);
   });
 }
+
+// swictched button form all to open ,open to close again close to open
+let allIssue = []
+
+document.getElementById('all-btn').addEventListener('click',()=> {
+  displayAllIssueContaier(allIssue)
+  updateCount(allIssue)
+})
+document.getElementById('open-btn').addEventListener('click', () => {
+  const openIssue = allIssue.filter(issue => issue.status === "open")
+  displayAllIssueContaier(openIssue)
+  updateCount(openIssue)
+})
+document.getElementById('closed-btn').addEventListener('click', () => {
+  const closeIssue = allIssue.filter(issue => issue.status === "closed")
+  displayAllIssueContaier(closeIssue)
+  updateCount(closeIssue)
+})
