@@ -159,8 +159,13 @@ function displayAllIssueContaier(data) {
 let allIssue = [];
 
 document.getElementById("all-btn").addEventListener("click", () => {
+  manageSpinner(true);
+  setTimeout(() => {
   displayAllIssueContaier(allIssue);
   updateCount(allIssue);
+  manageSpinner(false);
+  }, 100);
+
 });
 document.getElementById("open-btn").addEventListener("click", () => {
   const openIssue = allIssue.filter((issue) => issue.status === "open");
