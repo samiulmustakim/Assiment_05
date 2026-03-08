@@ -58,10 +58,19 @@
               <div>
                 <label class="input validator join-item rounded-md">
                   <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-                  <input id="input-search" type="text" placeholder="Search issues..." required />
+                  <input
+                    autocomplete="off"
+                    id="input-search"
+                    type="text"
+                    placeholder="Search issues..."
+                    required
+                  />
                 </label>
               </div>
-              <button id="btn-search" class="btn btn-primary join-item rounded-md w-24">
+              <button
+                id="btn-search"
+                class="btn btn-primary join-item rounded-md w-24"
+              >
                 Search
               </button>
             </div>
@@ -90,11 +99,13 @@
               <span><i class="fa-solid fa-circle text-[#a855f7]"></i></span>
               <p>Closed</p>
             </div>
-            <img src="./assets/Closed- Status .png" alt="" />
           </div>
         </div>
 
-        <section id="spinner" class="h-80 flex items-center justify-center hidden">
+        <section
+          id="spinner"
+          class="h-80 flex items-center justify-center hidden"
+        >
           <span class="loading loading-bars loading-xs"></span>
           <span class="loading loading-bars loading-sm"></span>
           <span class="loading loading-bars loading-md"></span>

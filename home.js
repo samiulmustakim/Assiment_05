@@ -183,13 +183,20 @@ document.getElementById('closed-btn').addEventListener('click', () => {
 
 // Search Input Search Input 
 document.getElementById('btn-search').addEventListener('click', () => {
+
+  const buttons = document.querySelectorAll('.filter-btn')
+  buttons.forEach(btn => {
+    btn.classList.remove("btn-primary")
+  });
   const input = document.getElementById('input-search')
-  const searchValue = input.ariaValueMax.trim().toLowerCase()
+  const searchValue = input.value.trim().toLowerCase()
   
-  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}")
+  fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
     .then((res) => res.json())
     .then((data) => {
-      const allWord = data.data
-      const filterWord = allWord.filter((word) => word,word.toLowerCase().incl)
+      const allData = data.data
+      const result = allData.filter(word => word.title.toLowerCase().includes(searchValue))
+      displayAllIssueContaier(result)
+      updateCount(result)
     })
 })
