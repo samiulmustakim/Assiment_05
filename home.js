@@ -1,8 +1,3 @@
-// Count Count 
-function updateCount(data) {
-  const count = document.getElementById('issue-count')
-  count.innerText = `${data.length} Issue`
-}
 
 // loadDetailsCart loadDetailsCart 
 async function loadDetailsCart(id) {
@@ -46,6 +41,22 @@ function displayDetailsCart(data) {
         </div>
   `
   document.getElementById('my_modal_5').showModal()
+}
+// Count Count 
+function updateCount(data) {
+  const count = document.getElementById('issue-count')
+  count.innerText = `${data.length} Issue`
+}
+
+// manage spin 
+const manageSpinner = (status) => {
+  if (status == true) {
+    document.getElementById('spinner').classList.remove("hidden")
+    document.getElementById('allIssueCardContainer').classList.add("hidden")
+  } else if (status == false) {
+    document.getElementById('spinner').classList.add("hidden")
+    document.getElementById('allIssueCardContainer').classList.remove("hidden")
+  }
 }
 
 // Button Click color show 
@@ -99,11 +110,13 @@ function formatDate(dateString){
 
 // all Issue push in container all Issue push in container all Issue push in container 
 async function loadAllIssueContaier() {
+  manageSpinner(true)
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const data = await res.json();
   allIssue = data.data
+  updateCount(allIssue)
   displayAllIssueContaier(data.data);
 }
 loadAllIssueContaier();
@@ -139,6 +152,7 @@ function displayAllIssueContaier(data) {
         `;
     allIssueCardContainer.append(cart);
   });
+  manageSpinner(false)
 }
 
 // swictched button form all to open ,open to close again close to open
@@ -150,11 +164,32 @@ document.getElementById('all-btn').addEventListener('click',()=> {
 })
 document.getElementById('open-btn').addEventListener('click', () => {
   const openIssue = allIssue.filter(issue => issue.status === "open")
-  displayAllIssueContaier(openIssue)
-  updateCount(openIssue)
+  manageSpinner(true)
+  setTimeout(() => {
+    displayAllIssueContaier(openIssue)
+    updateCount(openIssue)
+    manageSpinner(false)
+  }, 100);
 })
 document.getElementById('closed-btn').addEventListener('click', () => {
   const closeIssue = allIssue.filter(issue => issue.status === "closed")
-  displayAllIssueContaier(closeIssue)
-  updateCount(closeIssue)
+  manageSpinner(true)
+  setTimeout(() => {
+    displayAllIssueContaier(closeIssue)
+    updateCount(closeIssue)
+    manageSpinner(false)
+  }, 100);
+})
+
+// Search Input Search Input 
+document.getElementById('btn-search').addEventListener('click', () => {
+  const input = document.getElementById('input-search')
+  const searchValue = input.ariaValueMax.trim().toLowerCase()
+  
+  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}")
+    .then((res) => res.json())
+    .then((data) => {
+      const allWord = data.data
+      const filterWord = allWord.filter((word) => word,word.toLowerCase().incl)
+    })
 })

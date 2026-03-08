@@ -46,7 +46,9 @@
           class="flex bg-white rounded-lg items-center justify-between p-7 shadow-sm flex-col gap-8 lg:flex-row"
         >
           <div class="flex gap-3 flex-col sm:flex-row flex-wrap">
-            <button id="all-btn" class="btn btn-primary w-25 filter-btn">All</button>
+            <button id="all-btn" class="btn btn-primary w-25 filter-btn">
+              All
+            </button>
             <button id="open-btn" class="btn w-25 filter-btn">Open</button>
             <button id="closed-btn" class="btn w-25 filter-btn">Closed</button>
           </div>
@@ -56,10 +58,10 @@
               <div>
                 <label class="input validator join-item rounded-md">
                   <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-                  <input type="text" placeholder="Search issues..." required />
+                  <input id="input-search" type="text" placeholder="Search issues..." required />
                 </label>
               </div>
-              <button class="btn btn-primary join-item rounded-md w-24">
+              <button id="btn-search" class="btn btn-primary join-item rounded-md w-24">
                 Search
               </button>
             </div>
@@ -75,7 +77,7 @@
               <img class="w-9 h-9" src="./assets/Aperture.png" alt="" />
             </div>
             <div class="flex flex-col">
-              <p id="issue-count" class="text-2xl font-semibold">50 Issues</p>
+              <p id="issue-count" class="text-2xl font-semibold">0 Issue</p>
               <p class="text-gray-500">Track and manage your project issues</p>
             </div>
           </div>
@@ -87,9 +89,18 @@
             <div class="flex gap-2">
               <span><i class="fa-solid fa-circle text-[#a855f7]"></i></span>
               <p>Closed</p>
-            </div> <img src="./assets/Closed- Status .png" alt="">
+            </div>
+            <img src="./assets/Closed- Status .png" alt="" />
           </div>
         </div>
+
+        <section id="spinner" class="h-80 flex items-center justify-center hidden">
+          <span class="loading loading-bars loading-xs"></span>
+          <span class="loading loading-bars loading-sm"></span>
+          <span class="loading loading-bars loading-md"></span>
+          <span class="loading loading-bars loading-lg"></span>
+          <span class="loading loading-bars loading-xl"></span>
+        </section>
 
         <!-- All Card Issue All Card Issue All Card Issue -->
         <div class="bg-gray-50 shadow-sm pt-5">
@@ -97,22 +108,17 @@
             <div
               id="allIssueCardContainer"
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mx-auto"
-            >
-
-            </div>
-            
+            ></div>
           </div>
         </div>
       </div>
     </main>
 
-
-    
     <!-- details of the card  -->
     <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
     <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
       <div id="details-container" class="modal-box max-w-2xl">
-        <div  class="flex flex-col gap-5">
+        <div class="flex flex-col gap-5">
           <h1 class="text-2xl font-bold">Fix broken image uploads</h1>
           <div class="flex gap-2 text-sm items-center">
             <div class="badge badge-success rounded-full">Opened</div>
@@ -125,19 +131,22 @@
             <div class="badge badge-soft badge-error">Error</div>
             <div class="badge badge-soft badge-warning">Warning</div>
           </div>
-          <p>The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.</p>
+          <p>
+            The navigation menu doesn't collapse properly on mobile devices.
+            Need to fix the responsive behavior.
+          </p>
           <div class="flex justify-between bg-gray-100 p-5 rounded-md">
-          <div class="w-100">
-            <p>Assignee:</p>
-            <p class="font-bold">Fahim Ahmed</p>
-          </div>
-          <div class="w-100">
-            <p>Priority:</p>
-            <div class="badge badge-error">Error</div>
+            <div class="w-100">
+              <p>Assignee:</p>
+              <p class="font-bold">Fahim Ahmed</p>
+            </div>
+            <div class="w-100">
+              <p>Priority:</p>
+              <div class="badge badge-error">Error</div>
+            </div>
           </div>
         </div>
-        </div>
-        
+
         <div class="modal-action">
           <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
